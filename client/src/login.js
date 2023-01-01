@@ -1,6 +1,6 @@
-import React from 'react'
+import React from "react"
 
-import {Container} from "react-bootstrap";
+import {Container} from "react-bootstrap"
 
 const AUTH_URL = 
 // client id = public so we can put on our front end

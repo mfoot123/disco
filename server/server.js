@@ -1,6 +1,6 @@
-const express = require('express')
-const SpotifyWebApi = require('spotify-web-api-node')
-const spotifyWebApi = require('spotify-web-api-node')
+//require("dotenv").config()
+const express = require("express")
+const SpotifyWebApi = require("spotify-web-api-node")
 const cors = require("cors")
 const bodyParser = require("body-parser")
 
@@ -9,7 +9,7 @@ app.use(cors())
 app.use(bodyParser.json())
 
 // create a rout to refresh our token
-app.post('/refresh', (req, res) => {
+app.post("/refresh", (req, res) => {
     const refreshToken = req.body.refreshToken
     const spotifyApi = new SpotifyWebApi({
         // hard code our necessary data
@@ -23,15 +23,16 @@ app.post('/refresh', (req, res) => {
     .then(data => {
             //console.log('The access token has been refreshed!');
             res.json({
-                accessToken: data.body.accessToken,
-                expiresIn: data.body.expiresIn,
+                accessToken: data.body.access_token,
+                expiresIn: data.body.expires_in,
             })
-        }).catch(() => {
+        }).catch(err => {
+            console.log(err)
             res.sendStatus(400)
     }) //console.log('Could not refresh access token', err);
 })
 
-app.post('/login', (req,res) => {
+app.post("/login", (req,res) => {
     const code = req.body.code
     const spotifyApi = new SpotifyWebApi({
         // hard code our necessary data
@@ -50,7 +51,7 @@ app.post('/login', (req,res) => {
     })
     .catch(err => {
         // send errors if they are thrown
-        console.log(err)
+        //console.log(err)
         res.sendStatus(400)
     })
 })

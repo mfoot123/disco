@@ -26,7 +26,7 @@ export default function useAuth(code) {
         if(!refreshToken || !expiresIn) return
         const interval = setInterval(() => {
         axios
-        .post('http://localhost:3001/refresh', {
+        .post("http://localhost:3001/refresh", {
             refreshToken,
         }).then(res => {
             // some thing as above but only for expires in and access token
