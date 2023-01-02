@@ -15,7 +15,8 @@ export default function useAuth(code) {
             setExpiresIn(res.data.expiresIn)
             // removes the code from the end of our url
             window.history.pushState({}, null, '/')
-        }).catch(() => {
+        })
+        .catch(() => {
             // send back to local host if error is thrown
             window.location = "/"
         })
