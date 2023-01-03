@@ -1,12 +1,21 @@
-import React from 'react'
+import React, { useState, useEffect } from "react";
 import useAuth from "./useAuth"
 import MusicCards from "./MusicCards"
+import Player from "./Playback"
 
 export default function Dashboard({code }) {
     const accessToken = useAuth(code)
-    document.body.style.background = '#081018'; 
+    const [playingTrack, setPlayingTrack] = useState()
+
+function chooseTrack(track) {
+    setPlayingTrack(track)
+}
+
+    //document.body.style.background = '#081018'; 
     return <div 
     className="App" title="Disco"> 
-    <MusicCards></MusicCards>
+    <Player accessToken={accessToken} trackUri={playingTrack?.uri} />
+    <MusicCards>
+    </MusicCards>
     </div>
 }

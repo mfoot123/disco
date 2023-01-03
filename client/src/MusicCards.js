@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import TinderCard from "react-tinder-card";
 import "./MusicCard.css";
+//const SpotifyWebApi = require("spotify-web-api-node")
 
 function MusicCards() {
     const [people, setPeople] = useState([
