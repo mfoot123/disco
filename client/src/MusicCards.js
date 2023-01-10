@@ -1,11 +1,37 @@
-// code from: https://github.com/3DJakob/react-tinder-card-demo
+// code from: https://github.com/sam9750/tinder-clone/blob/main/src/TinderCards.js
 
 import React, { useState, useEffect } from "react";
 import TinderCard from "react-tinder-card";
 import "./MusicCard.css";
+import Player from "./Playback"
+import axios from "axios"
+//import SpotifyWebApi from 'spotify-web-api-node';
 //const SpotifyWebApi = require("spotify-web-api-node")
 
-function MusicCards() {
+const PLAYLISTS_ENDPOINT = "https://api.spotify.com/v1/me/playlists/37i9dQZEVXcEPpOf2HIUoC";
+
+function MusicCards({accessToken}) {
+
+  const [playingTrack, setPlayingTrack] = useState()
+  const [data, setData] = useState({})
+
+  const handleGetPlaylists = () => {
+    axios.get(PLAYLISTS_ENDPOINT, {
+      headers: {
+        Authorization: "Bearer" + accessToken,
+      },
+    }).then(response => {
+      setData(response.data)
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+  };
+
+  function chooseTrack(track) {
+    setPlayingTrack(track)
+}
+
     const [people, setPeople] = useState([
         {
         name: 'Brakence',
@@ -32,18 +58,18 @@ function MusicCards() {
               <TinderCard
                 className="swipe"
                 key={person.name}
-                preventSwipe={["up", "down"]}
-              >
+                preventSwipe={["up", "down"]}>
                 <div class="wrapper">
                   <div
                     className="card"
                     style={{ backgroundImage: `url(${person.url})` }}
-                  >
+>      
                     <div class="descriptions">
                       <h3>{person.name}</h3>
                       <p>{person.text}</p>
                     </div>
                   </div>
+                  <Player accessToken={accessToken} trackUri={playingTrack?.uri} />
                 </div>
               </TinderCard>
             ))}
